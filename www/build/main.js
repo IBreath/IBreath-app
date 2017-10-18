@@ -68,7 +68,7 @@ var TabsPage = (function () {
     return TabsPage;
 }());
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>\n  <ion-tab [root]="bluetoothTab" tabTitle="Connexion" tabIcon="home"></ion-tab>\n\n</ion-tabs>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/tabs/tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>\n  <ion-tab [root]="bluetoothTab" tabTitle="Connexion" tabIcon="contacts"></ion-tab>\n\n</ion-tabs>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/tabs/tabs.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], TabsPage);
@@ -167,7 +167,7 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/home/home.html"*/'<ion-header no-border>\n  <ion-navbar text-center="">\n    <ion-title></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--<div style="-->\n  <!--display: flex;-->\n  <!--flex-direction: column;-->\n  <!--align-items: center;-->\n  <!--justify-content: center;-->\n  <!--background: white;-->\n  <!--/*border: 5px solid white;*/-->\n  <!--width: 5em;-->\n  <!--height: 5em;-->\n  <!--border-radius: 5em;-->\n  <!--box-shadow: 0 0 20px rgba(255,255,255,0.5);-->\n  <!--color: #177d7b;-->\n  <!--margin: auto;-->\n<!--">-->\n    <!--<span style="font-size: 1.5em; text-align: center; font-weight: bold"> <ion-icon name="bluetooth"></ion-icon></span>-->\n  <!--</div>-->\n</ion-content>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/home/home.html"*/
     })
 ], HomePage);
 
@@ -209,7 +209,7 @@ var BluetoothPage = (function () {
         this.unpairedDevices = null;
         this.gettingDevices = true;
         this.bluetoothSerial.discoverUnpaired().then(function (devices) {
-            _this.unpairedDevices = devices.filter(function (device) { return device.name != null; });
+            _this.unpairedDevices = devices;
             _this.gettingDevices = false;
             devices.forEach(function (device) {
                 console.log(device.name);
@@ -225,18 +225,18 @@ var BluetoothPage = (function () {
     BluetoothPage.prototype.selectDevice = function (address) {
         var _this = this;
         var alert = this.alertCtrl.create({
-            title: 'Connect',
-            message: 'Do you want to connect with?',
+            title: 'Connexion',
+            message: 'Voulez-vous vous connecter ?',
             buttons: [
                 {
-                    text: 'Cancel',
+                    text: 'Annuler',
                     role: 'cancel',
                     handler: function () {
                         console.log('Cancel clicked');
                     }
                 },
                 {
-                    text: 'Connect',
+                    text: 'Connexion',
                     handler: function () {
                         _this.bluetoothSerial.connect(address).subscribe(_this.success, _this.fail);
                     }
@@ -248,20 +248,23 @@ var BluetoothPage = (function () {
     BluetoothPage.prototype.disconnect = function () {
         var _this = this;
         var alert = this.alertCtrl.create({
-            title: 'Disconnect?',
-            message: 'Do you want to Disconnect?',
+            title: 'Déconnexion ?',
+            message: 'Voulez-vous vous déconnecter ?',
             buttons: [
                 {
-                    text: 'Cancel',
+                    text: 'Annuler',
                     role: 'cancel',
                     handler: function () {
                         console.log('Cancel clicked');
                     }
                 },
                 {
-                    text: 'Disconnect',
+                    text: 'Déconnexion',
                     handler: function () {
                         _this.bluetoothSerial.disconnect();
+                        _this.unpairedDevices = null;
+                        _this.pairedDevices = null;
+                        _this.gettingDevices = false;
                     }
                 }
             ]
@@ -272,11 +275,12 @@ var BluetoothPage = (function () {
 }());
 BluetoothPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-bluetooth',template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/bluetooth/bluetooth.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>Connexion bluetooth</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list padding>\n    <button ion-button block (click)="startScanning()">scan</button>\n    <ion-list-header>\n      Paired Devices\n    </ion-list-header>\n    <ion-item *ngFor="let device of pairedDevices">\n      <span (click)="selectDevice(device.address)">\n        {{device.name}}\n      </span>\n    </ion-item>\n    <button ion-button block (click)="disconnect()">Disconnect</button>\n    <ion-list-header>\n      availlable Devices\n    </ion-list-header>\n    <ion-item *ngFor=\'let device of unpairedDevices\'>\n    <span (click)="selectDevice(device.address)">\n      {{device.name}}\n    </span>\n    </ion-item>\n    <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/bluetooth/bluetooth.html"*/
+        selector: 'page-bluetooth',template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/bluetooth/bluetooth.html"*/'<ion-header no-border>\n  <ion-navbar text-center="">\n    <ion-title>Connexion</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-list>\n    <ion-list-header style="margin: 40px 0 0 0">\n      Appareils associés\n    </ion-list-header>\n\n    <ion-item *ngIf="!pairedDevices">\n      <div class="address">\n      Aucun appareils accociés\n      </div>\n    </ion-item>\n\n    <ion-item *ngFor="let device of pairedDevices">\n      <span (click)="selectDevice(device.address)">\n        <div class="name">{{device.name}}</div>\n        <div class="address">{{device.address}}</div>\n      </span>\n    </ion-item>\n\n    <ion-list-header style="margin: 40px 0 0 0">\n      Appareils disponibles\n    </ion-list-header>\n\n    <ion-item *ngIf="!unpairedDevices">\n      <div class="address">\n        Aucun appareils disponibles\n      </div>\n    </ion-item>\n\n    <ion-item *ngFor=\'let device of unpairedDevices\'>\n      <span (click)="selectDevice(device.address)">\n          <div class="name">{{device.name}}</div>\n          <div class="address">{{device.address}}</div>\n      </span>\n    </ion-item>\n  </ion-list>\n\n  <div style="position: fixed; bottom: 75px; left: 50%; transform: translateX(-50%);">\n    <div style="display: flex; justify-content:center;">\n      <div class="btn-bluetooth">\n        <button color="grey" round ion-button large icon-only (click)="startScanning()">\n          <ion-icon name="bluetooth"></ion-icon>\n        </button>\n        <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>\n      </div>\n\n      <div class="btn-bluetooth">\n        <button color="white" round ion-button large icon-only (click)="disconnect()">\n          <ion-icon name="close"></ion-icon>\n        </button>\n      </div>\n    </div>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/bluetooth/bluetooth.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_bluetooth_serial__["a" /* BluetoothSerial */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_native_bluetooth_serial__["a" /* BluetoothSerial */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_native_bluetooth_serial__["a" /* BluetoothSerial */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */]) === "function" && _b || Object])
 ], BluetoothPage);
 
+var _a, _b;
 //# sourceMappingURL=bluetooth.js.map
 
 /***/ }),

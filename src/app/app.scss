@@ -1,20 +1,14 @@
 // http://ionicframework.com/docs/theming/
 
+@import '../assets/fonts/gotham';
 
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+ion-content {
+  font-family: 'Gotham-light' !important;
+  background: linear-gradient(bottom, #15657A, #18887A) !important;
 
-ion-app {
-  background: linear-gradient(bottom, #fff, #000);
+}
+
+ion-header {
+  font-family: 'Gotham-light' !important;
+  //box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.2);
 }

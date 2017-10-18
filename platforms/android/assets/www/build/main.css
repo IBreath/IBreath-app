@@ -25198,3 +25198,8 @@ ion-navbar.toolbar {
     padding-top: calc(16px + 20px);
   }
 }
+
+ion-app.md {
+  background: -webkit-gradient(linear, left bottom, left top, from(#fff), to(#000));
+  background: linear-gradient(bottom, #fff, #000);
+}

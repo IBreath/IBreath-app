@@ -22,7 +22,7 @@ export class BluetoothPage {
     this.gettingDevices   = true;
 
     this.bluetoothSerial.discoverUnpaired().then((devices) => {
-          this.unpairedDevices  = devices.filter(device => device.name != null);
+          this.unpairedDevices  = devices;
           this.gettingDevices   = false;
           devices.forEach(device => {
             console.log(device.name);
@@ -50,18 +50,18 @@ export class BluetoothPage {
   selectDevice(address: any) {
 
     let alert = this.alertCtrl.create({
-      title: 'Connect',
-      message: 'Do you want to connect with?',
+      title: 'Connexion',
+      message: 'Voulez-vous vous connecter ?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Annuler',
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Connect',
+          text: 'Connexion',
           handler: () => {
             this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
           }
@@ -74,20 +74,23 @@ export class BluetoothPage {
 
   disconnect() {
     let alert = this.alertCtrl.create({
-      title: 'Disconnect?',
-      message: 'Do you want to Disconnect?',
+      title: 'Déconnexion ?',
+      message: 'Voulez-vous vous déconnecter ?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Annuler',
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Disconnect',
+          text: 'Déconnexion',
           handler: () => {
             this.bluetoothSerial.disconnect();
+            this.unpairedDevices = null;
+            this.pairedDevices = null;
+            this.gettingDevices = false;
           }
         }
       ]
