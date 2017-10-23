@@ -48,6 +48,7 @@ export class BluetoothPage {
 
   success   = (data)  => {
     this.gv.setBluetoothName('test');
+    console.log(JSON.stringify(data));
     alert(data);
   };
 
