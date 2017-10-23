@@ -5,6 +5,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { BluetoothPage } from '../pages/bluetooth/bluetooth';
+import { DashboardPage } from '../pages/dashboard/dashboard';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -13,11 +14,14 @@ import { MeasureService} from '../providers/measure-service/measure-service';
 
 import { HttpModule } from '@angular/http';
 
+import {GlobalVars} from '../providers/globalVars';
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     BluetoothPage,
+    DashboardPage,
   ],
   imports: [
     BrowserModule,
@@ -29,13 +33,15 @@ import { HttpModule } from '@angular/http';
     MyApp,
     HomePage,
     BluetoothPage,
+    DashboardPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     BluetoothSerial,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MeasureService
+    MeasureService,
+    GlobalVars,
   ]
 })
 export class AppModule {

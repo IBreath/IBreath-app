@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Mes données</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list padding>
+    <ion-list-header>
+      Dernières mesures
+    </ion-list-header>
+
+    <ion-item *ngFor="let measure of measures">
+      <span>
+        <!--<div class="name">{{device.name}}</div>-->
+        <!--<div class="address">{{device.address}}</div>-->
+      </span>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
