@@ -12,3 +12,9 @@ ion-header {
   font-family: 'Gotham-light' !important;
   //box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.2);
 }
+
+ion-menu {
+  ion-content {
+    background: white !important;
+  }
+}

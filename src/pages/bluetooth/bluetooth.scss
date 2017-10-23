@@ -3,15 +3,25 @@ page-bluetooth {
   background: linear-gradient(bottom, #15657A, #18887A) !important;
 
   ion-list-header {
-    background-color: #42424D !important;
+    background-color: transparent !important;
     padding:10px 0;
     color: white !important;
-    border-top:0 !important;
+    border:0 !important;
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35) !important;
+
     //border-bottom: 1px solid white;
   }
 
+  ion-item {
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1) !important;
+
+    .item-inner {
+      border:0 !important;
+    }
+  }
+
+
   ion-list {
-    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
     .name {
       font-size: 1em;
     }

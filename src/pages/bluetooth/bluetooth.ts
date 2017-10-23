@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-bluetooth',
@@ -12,7 +13,7 @@ export class BluetoothPage {
   pairedDevices:    any;
   gettingDevices:   Boolean;
 
-  constructor(private bluetoothSerial: BluetoothSerial, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private bluetoothSerial: BluetoothSerial, private alertCtrl: AlertController) {
     bluetoothSerial.enable();
   }
 
