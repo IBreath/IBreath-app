@@ -3,16 +3,80 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
-  <label>Ici : {{ gv.bluetoothName }}</label>
-  <button ion-button (click)="data1()">Donnée 1</button>
-  <button ion-button (click)="data2()">Donnée 2</button>
-  <button ion-button (click)="read()">read</button>
+  <!--<label>Ici : {{ gv.bluetoothName }}</label>-->
+
+  <!--<div style="width: 100%;height: 41%; background: rgba(48, 38, 62, 1);">-->
+    <!--<button ion-button (click)="data1()">Donnée 1</button>-->
+    <!--<button ion-button (click)="inc()">inc</button>-->
+    <!--<button ion-button (click)="data2()">Donnée 2</button>-->
+    <!--<button ion-button (click)="reset()">Recalibrage</button>-->
+  <!--</div>-->
+
+    <div style="height:8vh; background: #222227;width: 100%; color:white; border-bottom: 1px #2a2831 solid; padding: 10px;">
+        <ion-icon name="bluetooth" style="display: inline-block; margin: 0 10px; font-size: 2em;vertical-align: middle"></ion-icon>
+        <div *ngIf="gv.bluetoothName" style="display: inline-block;">Connecté à : <span style="font-weight: bold;vertical-align: middle">{{gv.bluetoothName}}</span></div>
+        <div *ngIf="!gv.bluetoothName" style="display: inline-block;border-bottom: 1px solid #b4b4b4;" (click)="goToBluetoothPage();">Se connecter</div>
+
+    </div>
+
+  <!--<div style="position: absolute; bottom: 0;left: 0;right: 0;">-->
+  <div style="height:43vh; background: url('../../assets/images/bg.jpg');     background-size: cover;padding: 20px;background-repeat: round;    position: relative;">
+    <div style="background: rgba(48, 38, 62, 0.9); width: 100%; height: 100%;position: absolute;top:0;left: 0;"></div>
+    <div>
+        <div style="position: relative;margin: 20px auto;font-size: 40px">
+        <div style="text-align:center; top: 50%;bottom: auto;left: 50%;transform: translateY(-50%) translateX(-50%);font-size: 1em;position: absolute;color: #bbb;font-weight: 100;line-height: 0.5;">
+          <div style="color:white;" *ngIf="!isCalibrating">
+              {{value}}
+              <div style="font-size: 0.5em;margin-top: 20px;">MG/L</div>
+          </div>
+          <span style="color:white; font-size: 0.5em; font-weight: 300;" *ngIf="isCalibrating">Calibrage<br>en cours</span>
+        </div>
+        <round-progress style="margin: auto;"
+                        [current]="value"
+                        [max]="0.25"
+                        [background]="'#6FD7C9'"
+                        [stroke]="7"
+                        [color]="'#FA3762'"
+                        [radius]="90"
+        >
+        </round-progress>
+      </div>
+    </div>
+  </div>
+
+<div style="background: white;height: 40vh">
+    <div *ngIf="isEnding && isMoreThanLimit" style="font-size: 1.5em;font-weight: 300; color: white;background: #FA3762;display: inline-flex;width: 100%;">
+        <div style="min-width: 70%; padding: 15px 20px">Vous pourez prendre le volant dans</div>
+        <div style="font-size: 2.5em; min-width: 30%; padding: 8px 0;font-weight: 400;text-align: center">XH</div>
+    </div>
+
+    <div *ngIf="isEnding && !isMoreThanLimit" style="font-size: 1.5em;font-weight: 300; color: white;background: #6FD7C9;display: inline-flex;width: 100%">
+        <div style="min-width: 100%; padding: 15px 20px">Vous pouvez prendre le volant</div>
+    </div>
+
+    <div style="font-size: 1.5em;font-weight: 300; color: white;background: #FA3762;display: inline-flex;width: 100%;">
+        <div style="min-width: 70%; padding: 15px 20px">Vous pourez prendre le volant dans</div>
+        <div style="font-size: 2.5em; min-width: 30%; padding: 8px 0;font-weight: 400;text-align: center">XH</div>
+    </div>
+
+    <!--<div style="font-size: 1.5em;font-weight: 300; color: white;background: #6FD7C9;display: inline-flex;width: 100%">-->
+        <!--<div style="min-width: 100%; padding: 15px 20px">Vous pouvez prendre le volant</div>-->
+    <!--</div>-->
+
+    <div style="font-size: 2em;font-weight: 200; color: #222227;padding: 20px;background: #ededed;border-top: 1px #222227 solid;">
+        La limite autorisée en <i>France</i> est de <b>0,25 mg/l</b>
+    </div>
+</div>
+  <!--</div>-->
+
+
+
   <!--<div style="-->
   <!--display: flex;-->
   <!--flex-direction: column;-->

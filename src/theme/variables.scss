@@ -41,6 +41,7 @@ $colors: (
   dark:       #222,
   white:      #fff,
   grey: #18887A,
+  purple: #342B41,
   transparent: rgba(0,0,0,0)
 );
 
@@ -56,7 +57,7 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
+$toolbar-background: white;
 
 
 // App Windows Variables

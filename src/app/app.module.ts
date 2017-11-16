@@ -7,6 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { BluetoothPage } from '../pages/bluetooth/bluetooth';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 
+import { HomeModal } from '../pages/home/home-modal';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
@@ -16,16 +18,19 @@ import { HttpModule } from '@angular/http';
 
 import {GlobalVars} from '../providers/globalVars';
 
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     BluetoothPage,
     DashboardPage,
+    HomeModal,
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    RoundProgressModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -34,6 +39,7 @@ import {GlobalVars} from '../providers/globalVars';
     HomePage,
     BluetoothPage,
     DashboardPage,
+    HomeModal,
   ],
   providers: [
     StatusBar,

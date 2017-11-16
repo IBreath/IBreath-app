@@ -1,77 +1,84 @@
-import { Component } from '@angular/core';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-import { GlobalVars} from '../../providers/globalVars';
+import {Component, NgZone} from '@angular/core';
+import {BluetoothSerial} from '@ionic-native/bluetooth-serial';
+import {GlobalVars} from '../../providers/globalVars';
+import {ModalController, NavController, ViewController} from 'ionic-angular';
+import {HomeModal} from './home-modal';
+import {BluetoothPage} from "../bluetooth/bluetooth";
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+    selector: 'page-home',
+    templateUrl: 'home.html',
 })
 export class HomePage {
 
-  public measures: any;
+    public measures: any;
 
-  public test: any;
+    public value: number;
 
-  constructor( public bluetoothSerial: BluetoothSerial, public gv: GlobalVars){
+    public isCalibrating: boolean;
 
-      this.bluetoothSerial.subscribe('\r\n').subscribe((success) => {
-          console.log(JSON.stringify(success));
-      }, (error) => {
-          console.log(JSON.stringify(error));
+    public isEnding: boolean;
 
-      });
+    public isMoreThanLimit: boolean;
 
-      // this.bluetoothSerial.subscribeRawData().subscribe(
-      //     (data) => {
-      //
-      //         this.bluetoothSerial.read().then(
-      //             (data) => {
-      //                 // console.log(JSON.stringify(data));
-      //                 var buffer = new Uint8Array(data);
-      //                 console.log(JSON.stringify(buffer));
-      //             },
-      //             (error) => {
-      //                 console.log('error in getting the data');
-      //                 console.log(JSON.stringify(error));
-      //             }
-      //         );
-      //     },
-      // );
-
-  }
-
-  read() {
-      var data = this.bluetoothSerial.read().then(data => {
-          console.log(JSON.stringify(data));
-      });
-
-  }
-    onData(data) {
-        console.log(JSON.stringify(data));
+    constructor(public bluetoothSerial: BluetoothSerial,
+                public gv: GlobalVars,
+                public ngZone: NgZone,
+                public modalCtrl: ModalController,
+                public navCtrl: NavController,) {
+        this.value          = 0;
+        this.isCalibrating  = false;
+        this.isEnding       = false;
+        this.isMoreThanLimit = false;
+        this.subscribe();
     }
 
-    onFailed(data) {
-        console.log(JSON.stringify(data));
-    }
+    subscribe() {
+        this.bluetoothSerial.subscribe('\r\n').subscribe((success) => {
 
-    data1() {
-        this.bluetoothSerial.write('1').then(data => {
-            console.log(data)
-        }, data => {
-            console.error(data)
+            // gv.setBluetoothName()
+            console.log(success);
+
+            if (success.includes('x0')) { // Début calibrage
+                this.ngZone.run(() => {
+                    this.value          = 0;
+                    this.isCalibrating  = true;
+                    this.isEnding       = false;
+                });
+            }
+
+            if (success.includes('x1')) { // Fin calibrage
+                this.ngZone.run(() => {
+                    this.isCalibrating = false;
+                });
+            }
+
+            if (success.includes('x2')) { // Fin prise de mesure
+                // let modal = this.modalCtrl.create(HomeModal);
+                // modal.present();
+                this.ngZone.run(() => {
+                    this.isEnding = true;
+                });
+            }
+
+            if (success.includes('v=')) {
+                this.ngZone.run(() => {
+                    this.value = +success.replace('v=', '');
+                    this.isCalibrating = false;
+                    if (this.value > 0.25) {
+                        this.isMoreThanLimit = true;
+                    } else {
+                        this.isMoreThanLimit = false;
+                    }
+                });
+            }
+
+        }, (error) => {
+            console.log(JSON.stringify(error));
         });
-
-      console.log('data1');
     }
 
-    data2() {
-        this.bluetoothSerial.write('0').then(data => {
-            console.log(data)
-        }, data => {
-            console.error(data)
-        });
-      console.log('data2');
-        // this.bluetoothSerial.write(1).then(success, failure);
-
+    goToBluetoothPage() {
+        this.navCtrl.push(BluetoothPage);
     }
 }

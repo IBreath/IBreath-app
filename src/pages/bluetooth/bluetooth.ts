@@ -3,6 +3,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { AlertController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { GlobalVars} from '../../providers/globalVars';
+import {HomePage} from "../home/home";
 
 @Component({
   selector: 'page-bluetooth',
@@ -13,6 +14,7 @@ export class BluetoothPage {
   unpairedDevices:  any;
   pairedDevices:    any;
   gettingDevices:   Boolean;
+  clickedBluetoothName: string;
 
   constructor(public navCtrl: NavController, private bluetoothSerial: BluetoothSerial, private alertCtrl: AlertController, public gv: GlobalVars) {
     bluetoothSerial.enable();
@@ -46,16 +48,15 @@ export class BluetoothPage {
   }
 
 
-  success   = (data)  => {
-    this.gv.setBluetoothName('test');
-    console.log(JSON.stringify(data));
-    alert(data);
+  success   = (name)  => {
+    this.gv.setBluetoothName(this.clickedBluetoothName);
+    this.navCtrl.push(HomePage);
   };
 
   fail      = (error) => alert(error);
 
 
-  selectDevice(address: any) {
+  selectDevice(address: any, name: string) {
 
     let alert = this.alertCtrl.create({
       title: 'Connexion',
@@ -71,6 +72,7 @@ export class BluetoothPage {
         {
           text: 'Connexion',
           handler: () => {
+            this.clickedBluetoothName = name;
             this.bluetoothSerial.connect(address).subscribe(this.success, this.fail);
           }
         }

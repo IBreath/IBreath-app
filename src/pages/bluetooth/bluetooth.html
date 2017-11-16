@@ -15,57 +15,60 @@
 
 <ion-content>
 
-  <ion-list padding>
-    <ion-list-header style="margin: 40px 0 0 0">
+  <div>
+    <div class="btn-container">
+      <div class="btn-connect-bluetooth" (click)="startScanning()">
+        <ion-icon style="vertical-align: middle;" name="bluetooth"></ion-icon>
+        <span style="font-size: 0.7em;vertical-align: middle;margin: 0 0 0 10px; border-bottom: 1px solid #b4b4b4;">Rechercher</span>
+
+      </div>
+
+      <div class="btn-disconnect-bluetooth" (click)="disconnect()">
+          <ion-icon name="close"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <ion-list>
+    <ion-list-header style="margin: 0 0 0 0">
       Appareils associés
     </ion-list-header>
 
     <ion-item *ngIf="!pairedDevices">
-      <div class="address">
+      <div class="empty">
       Aucun appareils accociés
       </div>
     </ion-item>
 
     <ion-item *ngFor="let device of pairedDevices">
-      <span (click)="selectDevice(device.address)">
+      <span (click)="selectDevice(device.address, device.name)">
         <div class="name">{{device.name}}</div>
         <div class="address">{{device.address}}</div>
       </span>
     </ion-item>
+  </ion-list>
 
-    <ion-list-header style="margin: 40px 0 0 0">
+  <ion-list>
+    <ion-list-header style="margin: 0 0 0 0">
       Appareils disponibles
     </ion-list-header>
 
     <ion-item *ngIf="!unpairedDevices">
-      <div class="address">
+      <div class="empty">
         Aucun appareils disponibles
       </div>
     </ion-item>
 
+    <div *ngIf="gettingDevices" class="unavalaible-spinner">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
     <ion-item *ngFor='let device of unpairedDevices'>
-      <span (click)="selectDevice(device.address)">
+      <span (click)="selectDevice(device.address, device.name)">
           <div class="name">{{device.name}}</div>
           <div class="address">{{device.address}}</div>
       </span>
     </ion-item>
   </ion-list>
-
-  <div style="position: fixed; bottom: 75px; left: 50%; transform: translateX(-50%);">
-    <div style="display: flex; justify-content:center;">
-      <div class="btn-bluetooth">
-        <button color="grey" round ion-button large icon-only (click)="startScanning()">
-          <ion-icon name="bluetooth"></ion-icon>
-        </button>
-        <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
-      </div>
-
-      <div class="btn-bluetooth">
-        <button color="white" round ion-button large icon-only (click)="disconnect()">
-          <ion-icon name="close"></ion-icon>
-        </button>
-      </div>
-    </div>
-  </div>
 
 </ion-content>

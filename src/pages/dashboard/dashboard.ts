@@ -18,8 +18,8 @@ export class DashboardPage {
   findMeasure(){
     this.measureService.findMeasures()
         .then(data => {
+          console.log(data);
           this.measures = data;
-          console.log(JSON.stringify(data));
         });
   }
 

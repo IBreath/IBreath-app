@@ -13,7 +13,7 @@ import { DashboardPage }        from '../pages/dashboard/dashboard';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = BluetoothPage;
+  rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
 

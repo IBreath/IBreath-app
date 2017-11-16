@@ -14,12 +14,12 @@
       Dernières mesures
     </ion-list-header>
 
-    <!--<ion-item *ngFor="let measure of measures">-->
-      <!--<span>-->
-        <!--<div class="name">{{device.name}}</div>-->
-        <!--<div class="address">{{device.address}}</div>-->
-      <!--</span>-->
-    <!--</ion-item>-->
+    <ion-item *ngFor="let measure of measures">
+      <span>
+        <div class="name">ID: {{measure.id}}</div>
+        <div class="name">{{measure.value}} MG/L</div>
+      </span>
+    </ion-item>
 
   </ion-list>
 </ion-content>
