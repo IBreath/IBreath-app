@@ -11,19 +11,29 @@ export class MeasureService {
   constructor(public http: Http) {
   }
 
+  setMeasure(userId, value) {
+      return new Promise(resolve => {
+          this.http.post(Constant.API_ENDPOINT + '/measures/' + userId, { 'value' : value })
+              .map(res => res.json())
+              .subscribe(data => {
+                  console.log(data);
+                  // this.measures = data;
+                  // resolve(this.measures);
+              });
+      });
+  }
+
   findMeasures() {
     if (this.measures) {
       return Promise.resolve(this.measures);
     }
 
-    // Dont have the data yet
     return new Promise(resolve => {
-      this.http.get(Constant.API_ENDPOINT + '/measure/10/1')
+      this.http.get(Constant.API_ENDPOINT + '/measures/10/1')
           .map(res => res.json())
           .subscribe(data => {
             this.measures = data;
-            console.log(JSON.stringify(data));
-              resolve(this.measures);
+            resolve(this.measures);
           });
     });
   }

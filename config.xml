@@ -82,6 +82,9 @@
     <allow-navigation href="http://192.168.48.1:8100" />
     <allow-navigation href="http://192.168.80.1:8100" />
     <allow-navigation href="http://10.3.129.39:8100" />
+    <allow-navigation href="http://192.168.42.30:8100" />
+    <allow-navigation href="http://10.3.129.148:8100" />
+    <allow-navigation href="http://172.19.0.1:8100" />
     <engine name="android" spec="^6.2.3" />
     <plugin name="cordova-plugin-bluetooth-serial" spec="^0.4.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />

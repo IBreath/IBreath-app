@@ -18,7 +18,16 @@ export class DashboardPage {
   findMeasure(){
     this.measureService.findMeasures()
         .then(data => {
-          console.log(data);
+              this.measures = data;
+        });
+
+    // this.measureService.setMeasure(1, 1.7)
+    //     .then(data => {
+    //       console.log(data);
+    //     });
+
+    this.measureService.findMeasures()
+        .then(data => {
           this.measures = data;
         });
   }

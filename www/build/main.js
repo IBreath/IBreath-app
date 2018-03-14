@@ -222,7 +222,14 @@ var DashboardPage = (function () {
         var _this = this;
         this.measureService.findMeasures()
             .then(function (data) {
-            console.log(data);
+            _this.measures = data;
+        });
+        // this.measureService.setMeasure(1, 1.7)
+        //     .then(data => {
+        //       console.log(data);
+        //     });
+        this.measureService.findMeasures()
+            .then(function (data) {
             _this.measures = data;
         });
     };
@@ -230,7 +237,7 @@ var DashboardPage = (function () {
 }());
 DashboardPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-dashboard',template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Mes données</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-list padding>\n    <ion-list-header>\n      Dernières mesures\n    </ion-list-header>\n\n    <ion-item *ngFor="let measure of measures">\n      <span>\n        <div class="name">ID: {{measure.id}}</div>\n        <div class="name">{{measure.value}} MG/L</div>\n      </span>\n    </ion-item>\n\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/dashboard/dashboard.html"*/,
+        selector: 'page-dashboard',template:/*ion-inline-start:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/dashboard/dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Mes données</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <div>\n    <div style="font-size: 1.5em;font-weight: 300; color: white;background: #FA3762;display: inline-flex;width: 100%;">\n      <div style="padding: 15px 20px">Dernières mesures</div>\n    </div>\n  </div>\n\n  <div *ngFor="let measure of measures" style="\n    margin: 10px;\n    padding: 16px;\n    border-left: 5px solid;\n    border-top: 1px solid;\n    border-bottom: 1px solid;\n    border-right: 1px solid;">\n      <div style="height: 50px;">\n        <div class="name" style="font-weight: bold; float:left;">#{{measure.id}}</div>\n        <div style="float: right;">\n          <span class="name">le {{measure.dateTime.dayOfMonth}}/{{measure.dateTime.monthValue}}/{{measure.dateTime.year}}</span>\n          <span class="name">à {{measure.dateTime.hour}}H{{measure.dateTime.minute}}</span>\n        </div>\n      </div>\n      <div class="clearfix"></div>\n      <div class="name" style="text-align: center;font-size: 34px;">{{measure.value}} MG/L</div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/corentin/INSSET/Projets/iBreath-app/src/pages/dashboard/dashboard.html"*/,
         providers: [__WEBPACK_IMPORTED_MODULE_2__providers_measure_service_measure_service__["a" /* MeasureService */]]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_measure_service_measure_service__["a" /* MeasureService */]])
@@ -267,18 +274,28 @@ var MeasureService = (function () {
     function MeasureService(http) {
         this.http = http;
     }
+    MeasureService.prototype.setMeasure = function (userId, value) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.http.post(__WEBPACK_IMPORTED_MODULE_3__app_constants__["a" /* API_ENDPOINT */] + '/measures/' + userId, { 'value': value })
+                .map(function (res) { return res.json(); })
+                .subscribe(function (data) {
+                console.log(data);
+                // this.measures = data;
+                // resolve(this.measures);
+            });
+        });
+    };
     MeasureService.prototype.findMeasures = function () {
         var _this = this;
         if (this.measures) {
             return Promise.resolve(this.measures);
         }
-        // Dont have the data yet
         return new Promise(function (resolve) {
-            _this.http.get(__WEBPACK_IMPORTED_MODULE_3__app_constants__["a" /* API_ENDPOINT */] + '/measure/10/1')
+            _this.http.get(__WEBPACK_IMPORTED_MODULE_3__app_constants__["a" /* API_ENDPOINT */] + '/measures/10/1')
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 _this.measures = data;
-                console.log(JSON.stringify(data));
                 resolve(_this.measures);
             });
         });
@@ -287,9 +304,10 @@ var MeasureService = (function () {
 }());
 MeasureService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], MeasureService);
 
+var _a;
 //# sourceMappingURL=measure-service.js.map
 
 /***/ }),

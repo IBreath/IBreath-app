@@ -9,17 +9,27 @@
 
 <ion-content>
 
-  <ion-list padding>
-    <ion-list-header>
-      Dernières mesures
-    </ion-list-header>
+  <div>
+    <div style="font-size: 1.5em;font-weight: 300; color: white;background: #FA3762;display: inline-flex;width: 100%;">
+      <div style="padding: 15px 20px">Dernières mesures</div>
+    </div>
+  </div>
 
-    <ion-item *ngFor="let measure of measures">
-      <span>
-        <div class="name">ID: {{measure.id}}</div>
-        <div class="name">{{measure.value}} MG/L</div>
-      </span>
-    </ion-item>
-
-  </ion-list>
+  <div *ngFor="let measure of measures" style="
+    margin: 10px;
+    padding: 16px;
+    border-left: 5px solid;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-right: 1px solid;">
+      <div style="height: 50px;">
+        <div class="name" style="font-weight: bold; float:left;">#{{measure.id}}</div>
+        <div style="float: right;">
+          <span class="name">le {{measure.dateTime.dayOfMonth}}/{{measure.dateTime.monthValue}}/{{measure.dateTime.year}}</span>
+          <span class="name">à {{measure.dateTime.hour}}H{{measure.dateTime.minute}}</span>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="name" style="text-align: center;font-size: 34px;">{{measure.value}} MG/L</div>
+  </div>
 </ion-content>
